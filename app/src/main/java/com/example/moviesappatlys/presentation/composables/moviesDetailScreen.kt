@@ -27,9 +27,8 @@ fun MovieDetailsScreen(movie: MoviesResult, onBack: () -> Unit) {
         IconButton(onClick = onBack) {
 //            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
         }
-        GlideImage(
+        LoadImage(
             imageUrl = ("https://image.tmdb.org/t/p/w500" + movie.backdropPath) ?: "",
-            contentDescription = movie.title,
             modifier = Modifier
                 .height(350.dp)
                 .width(350.dp)

@@ -15,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviesViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
-    private val _getTrendingMovies: MutableStateFlow<ApiResult<MoviesResponse>> = MutableStateFlow(ApiResult.Loading)
+    private val _getTrendingMovies: MutableStateFlow<ApiResult<MoviesResponse>> =
+        MutableStateFlow(ApiResult.Loading)
     val getTrendingMovies = _getTrendingMovies.asStateFlow()
 
     fun getTrendingMovies() {
@@ -25,12 +26,13 @@ class MoviesViewModel @Inject constructor(private val repository: MovieRepositor
             }
         }
     }
-    private val _getSearchedMovies: MutableStateFlow<ApiResult<MoviesResponse>> = MutableStateFlow(ApiResult.Loading)
-    val getSearchedMovies = _getSearchedMovies.asStateFlow()
+
     fun getSearchMovies(key: String) {
-        viewModelScope.launch {
-            repository.getSearchedMovies(key = key).collect{
-                _getTrendingMovies.value = it
+        if (key.isNotEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.getSearchedMovies(key = key).collect {
+                    _getTrendingMovies.value = it
+                }
             }
         }
     }

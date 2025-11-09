@@ -74,28 +74,28 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //Hilt
-    implementation (libs.hilt.android)
+    implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     //Retrofit
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-    implementation (libs.logging.interceptor)
-    implementation (libs.timber)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
 
     //Glide
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
-    kapt ("com.github.bumptech.glide:compiler:4.15.0")
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation(libs.glide.compose)
+//    implementation("com.github.bumptech.glide:compose:1.0.0-beta08")
+    kapt("com.github.bumptech.glide:compiler:4.15.0")
 
 
-    // Use the BOM for consistent Compose versions
-    implementation ("androidx.compose:compose-bom:2024.06.00")
+    implementation("androidx.compose:compose-bom:2024.06.00")
 
-    // Compose dependencies
-    implementation ("androidx.compose.ui:ui")
-    implementation ("androidx.compose.material:material")
-    implementation ("androidx.compose.ui:ui-tooling-preview")
-    implementation ("androidx.compose.runtime:runtime-livedata")
-    implementation ("androidx.compose.animation:animation")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation("androidx.compose.animation:animation")
 }
