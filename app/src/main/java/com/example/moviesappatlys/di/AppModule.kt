@@ -1,12 +1,16 @@
 package com.example.moviesappatlys.di
 
+import android.content.Context
 import com.example.moviesappatlys.data.api.ApiService
+import com.example.moviesappatlys.data.local.AppDatabase
+import com.example.moviesappatlys.data.local.MovieDao
 import com.example.moviesappatlys.data.repoImpl.MovieRepositoryImpl
 import com.example.moviesappatlys.domain.repository.MovieRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,10 +48,10 @@ object AppModule {
             .baseUrl("https://api.themoviedb.org/").build()
     }
 
-    @Provides
     @Singleton
-    fun providesMovieRepository(apiService: ApiService): MovieRepository {
-        return MovieRepositoryImpl(apiService = apiService)
+    @Provides
+    fun providesMovieRepository(apiService: ApiService, movieDao: MovieDao): MovieRepository {
+        return MovieRepositoryImpl(apiService = apiService, movieDao = movieDao)
     }
 
     @Singleton
@@ -55,5 +59,15 @@ object AppModule {
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext applicationContext: Context): AppDatabase {
+        return androidx.room.Room.databaseBuilder(applicationContext, AppDatabase::class.java, "movies_db").build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieDao(db: AppDatabase): MovieDao = db.movieDao()
 
 }
